@@ -42,7 +42,7 @@ namespace DownloadR.Core.UnitTestProject.Session {
 
             opt1 = new DownloadFileOptions { File = "test.file" };
             opt2 = opt1.Clone() as DownloadFileOptions;
-            
+
             Assert.AreEqual(opt1, opt2);
         }
 

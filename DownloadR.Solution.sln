@@ -13,15 +13,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B702E869-F78
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tst", "tst", "{2D31307E-FBE6-485D-86FA-70B94E6AC978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.Core", "src\DownloadR.Core\DownloadR.Core.csproj", "{5B9011D7-C164-4A6A-962C-A78228520E2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DownloadR.Core", "src\DownloadR.Core\DownloadR.Core.csproj", "{5B9011D7-C164-4A6A-962C-A78228520E2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.Core.UnitTestProject", "tst\DownloadR.Core.UnitTestProject\DownloadR.Core.UnitTestProject.csproj", "{C70D3C07-3C35-41F2-B030-5DD846FBF615}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DownloadR.Core.UnitTestProject", "tst\DownloadR.Core.UnitTestProject\DownloadR.Core.UnitTestProject.csproj", "{C70D3C07-3C35-41F2-B030-5DD846FBF615}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.Impl", "src\DownloadR.Impl\DownloadR.Impl.csproj", "{8EE81C53-6DE3-4123-A211-1DF78C5EE78E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DownloadR.Impl", "src\DownloadR.Impl\DownloadR.Impl.csproj", "{8EE81C53-6DE3-4123-A211-1DF78C5EE78E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.Impl.UnitTestProject", "tst\DownloadR.Impl.UnitTestProject\DownloadR.Impl.UnitTestProject.csproj", "{37C39B15-89ED-4409-A9C2-0770C9BADF38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DownloadR.Impl.UnitTestProject", "tst\DownloadR.Impl.UnitTestProject\DownloadR.Impl.UnitTestProject.csproj", "{37C39B15-89ED-4409-A9C2-0770C9BADF38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.BaseTestProject", "tst\DownloadR.BaseTestProject\DownloadR.BaseTestProject.csproj", "{12C79913-BEB8-4AF7-9B87-48AEB0F609E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DownloadR.BaseTestProject", "tst\DownloadR.BaseTestProject\DownloadR.BaseTestProject.csproj", "{12C79913-BEB8-4AF7-9B87-48AEB0F609E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Files", "_Files", "{032AA40A-16EE-43D1-A38A-CDFB9A0AAE09}"
+	ProjectSection(SolutionItems) = preProject
+		TODOs.txt = TODOs.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
