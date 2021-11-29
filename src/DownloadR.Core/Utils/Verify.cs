@@ -5,5 +5,11 @@
                 throw new ParamNotSetException(paramName);
             }
         }
+
+        public static void ThrowIfNotSet(this object value, string paramName) {
+            if(value == null) {
+                throw new ParamNotSetException(paramName);
+            }
+        }
     }
 }

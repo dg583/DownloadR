@@ -27,5 +27,20 @@ namespace DownloadR.Core.UnitTestProject.Utils {
                 Verify.ThrowIfNotSet(value, nameof(value));
             });
         }
+
+
+        [Test]
+        public void Verify_Pass_WhenObjectIsNotNull() {
+            object obj = new object();
+            Verify.ThrowIfNotSet(obj, nameof(obj));
+        }
+
+        [Test]
+        public void Verify_Throws_WhenObjectIsNull() {
+            object obj = null;
+            Assert.Throws<ParamNotSetException>(() => {
+                Verify.ThrowIfNotSet(obj, nameof(obj));
+            });
+        }
     }
 }
