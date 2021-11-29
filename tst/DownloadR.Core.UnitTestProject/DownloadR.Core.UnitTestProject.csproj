@@ -17,4 +17,8 @@
     <Folder Include="Fakes\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DownloadR.Core\DownloadR.Core.csproj" />
+  </ItemGroup>
+
 </Project>
