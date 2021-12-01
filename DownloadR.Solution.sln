@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Files", "_Files", "{032AA4
 		TODOs.txt = TODOs.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.Impl.IntegrationTestProject", "tst\DownloadR.Impl.IntegrationTestProject\DownloadR.Impl.IntegrationTestProject.csproj", "{9352FE9C-6361-459B-8E66-A8CEC905862D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{12C79913-BEB8-4AF7-9B87-48AEB0F609E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12C79913-BEB8-4AF7-9B87-48AEB0F609E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12C79913-BEB8-4AF7-9B87-48AEB0F609E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9352FE9C-6361-459B-8E66-A8CEC905862D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9352FE9C-6361-459B-8E66-A8CEC905862D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9352FE9C-6361-459B-8E66-A8CEC905862D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9352FE9C-6361-459B-8E66-A8CEC905862D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{8EE81C53-6DE3-4123-A211-1DF78C5EE78E} = {B702E869-F786-4EEF-8EDD-912E885C451E}
 		{37C39B15-89ED-4409-A9C2-0770C9BADF38} = {2D31307E-FBE6-485D-86FA-70B94E6AC978}
 		{12C79913-BEB8-4AF7-9B87-48AEB0F609E9} = {2D31307E-FBE6-485D-86FA-70B94E6AC978}
+		{9352FE9C-6361-459B-8E66-A8CEC905862D} = {2D31307E-FBE6-485D-86FA-70B94E6AC978}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D07F178F-38C3-4372-95C8-D57589844236}
