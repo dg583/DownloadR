@@ -29,12 +29,9 @@ namespace DownloadR {
         /// <param name="sessionNotificationInterceptor"></param>
         /// <returns></returns>
         public async Task StartSessionAsync(DownloadSession session, ISessionNotificationInterceptor? sessionNotificationInterceptor) {
-
             using(this._logger.BeginScope("DownloadSession")) {
                 var downloadSessionHandler = this.buildDownloadSessionHandler(sessionNotificationInterceptor);
-                
-                sessionNotificationInterceptor?.StartSession(downloadSessionHandler);
-                
+
                 await downloadSessionHandler.StartSessionAsync(session);
 
                 sessionNotificationInterceptor?.SessionCompleted();
@@ -63,7 +60,7 @@ namespace DownloadR {
 
         private IDownloadSessionHandler getDownloadSessionHandler() {
             try {
-                DownloadHandlerOptions options = new (this._options.WorkingDirectory);
+                DownloadHandlerOptions options = new(this._options.WorkingDirectory);
 
                 IDownloadSessionHandler handler = this._sessionHandlerBuilder.BuildDownloadSessionHandler(options);
 

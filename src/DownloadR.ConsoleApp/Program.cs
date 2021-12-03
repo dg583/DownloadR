@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -58,14 +59,7 @@ namespace DownloadR.ConsoleApp {
                             WorkingDirectory = _.HostingEnvironment.ContentRootPath
                         };
 
-                        return ActivatorUtilities.CreateInstance<DownloadR.DownloadManager>(provider, downloadManagerOptions);
-                    });
-
-                    options.UseTaskBuilder(provider => {
-                        ILoggerFactory loggerFactory = provider.GetRequiredService<ILoggerFactory>();
-
-                        //TODO: If dryrun -> Inject DryRunFileTaskBuilder instead
-                        return new DefaultDownloadTaskBuilder(loggerFactory);
+                        return ActivatorUtilities.CreateInstance<DownloadManager>(provider, downloadManagerOptions);
                     });
                 });
 
@@ -102,12 +96,9 @@ namespace DownloadR.ConsoleApp {
                     downloadSessionResult.DownloadSession.Settings.ParallelDownloads = options.ParallelDownload.Value;
             }
 
-            var inter = new Interceptor(downloadSessionResult.DownloadSession);
+            using var inter = new ProgressSessionNotificationInterceptor(downloadSessionResult.DownloadSession);
 
-            var dm = downloadManager.StartSessionAsync(downloadSessionResult.DownloadSession, inter);
-
-            await dm;
-
+            await downloadManager.StartSessionAsync(downloadSessionResult.DownloadSession, inter);
         }
 
         static Task handleValidate(IHost host, Options options) {
@@ -116,22 +107,21 @@ namespace DownloadR.ConsoleApp {
 
     }
 
-    public class Interceptor : ISessionNotificationInterceptor, IDisposable {
+    public class ProgressSessionNotificationInterceptor : ISessionNotificationInterceptor, IDisposable {
         private readonly DownloadSession _downloadSession;
 
         private readonly List<ProgressHandler> _progressHandlers = new List<ProgressHandler>();
 
-        public Interceptor(DownloadSession downloadSession) {
+        public ProgressSessionNotificationInterceptor(DownloadSession downloadSession) {
             downloadSession.ThrowIfNotSet(nameof(downloadSession));
 
             this._downloadSession = downloadSession;
+            this.initProgressHandlers();
         }
 
-        public void StartSession(IDownloadSessionHandler downloadSessionHandler) {
-
+        private void initProgressHandlers() {
             foreach(DownloadFileOptions downloadFileOptions in this._downloadSession.Configuration) {
                 ProgressHandler progressHandler = new ProgressHandler(
-                    downloadSessionHandler,
                     downloadFileOptions,
                     new ProgressBar(100)
                 );
@@ -140,13 +130,14 @@ namespace DownloadR.ConsoleApp {
             }
         }
 
-        public void SessionCompleted()
-        {
-            
+        public void SessionCompleted() {
+
         }
 
         public void OnFileDownloadStatusReport(FileDownloadStatusReport fileDownloadStatusReport) {
-            
+            foreach(ProgressHandler handler in this._progressHandlers.Where(x => x.IsResponsible(fileDownloadStatusReport))) {
+                handler.TryUpdateStatus(fileDownloadStatusReport);
+            }
         }
 
         public void Dispose() {

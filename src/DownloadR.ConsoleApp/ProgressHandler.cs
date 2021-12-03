@@ -1,6 +1,5 @@
 ﻿using System;
 
-using DownloadR;
 using DownloadR.Session;
 
 using Konsole;
@@ -9,40 +8,44 @@ namespace DownloadR.ConsoleApp {
     public class ProgressHandler : IDisposable {
         private const int INDENT = -15;
 
-        private readonly IDownloadSessionHandler _session;
         private readonly DownloadFileOptions _downloadFileOptions;
         private readonly ProgressBar _bar;
 
-        public ProgressHandler(IDownloadSessionHandler session, DownloadFileOptions downloadFileOptions, ProgressBar bar) {
-            this._session = session ?? throw new ArgumentNullException(nameof(session));
+        public ProgressHandler(DownloadFileOptions downloadFileOptions, ProgressBar bar) {
             this._downloadFileOptions = downloadFileOptions ?? throw new ArgumentNullException(nameof(downloadFileOptions));
             this._bar = bar ?? throw new ArgumentNullException(nameof(bar));
 
             this._bar.Refresh(0, $"{"Waiting",INDENT}{this._downloadFileOptions.File}");
-
-            this.captureEvents();
         }
 
-        //public async Task Start() {
-        //    this.captureEvents();
-        //    await this._session.StartAsync();
-        //}
+        public bool TryUpdateStatus(FileDownloadStatusReport report) {
+            if(!this.IsResponsible(report))
+                return false;
 
+            Action<FileDownloadStatusReport> action;
 
-        private void captureEvents() {
-            this._session.OnDownloadStarted += (sender, report) => { this.doWhenResponsible(report, updateProgressAsStarted); };
-
-            this._session.OnDownloadProgress += (sender, report) => { this.doWhenResponsible(report, updateProgress); };
-
-            this._session.OnDownloadCompleted += (sender, report) => { this.doWhenResponsible(report, updateProgressAsCompleted); };
-
-            this._session.OnDownloadFailed += (sender, report) => { this.doWhenResponsible(report, updateProgressAsFailed); };
-        }
-
-        private void doWhenResponsible(FileDownloadStatusReport report, Action<FileDownloadStatusReport> action) {
-            if(!report.Configuration.Equals(this._downloadFileOptions)) return;
+            switch(report.Status) {
+                case FileDownloadStatusType.Failed:
+                    action = updateProgressAsFailed;
+                    break;
+                case FileDownloadStatusType.Completed:
+                    action = updateProgressAsCompleted;
+                    break;
+                case FileDownloadStatusType.Downloading:
+                    action = updateProgress;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
             action(report);
+
+            return true;
+        }
+
+
+        public bool IsResponsible(FileDownloadStatusReport report) {
+            return report.Configuration.Equals(this._downloadFileOptions);
         }
 
         private void updateProgress(FileDownloadStatusReport report) {
@@ -56,8 +59,6 @@ namespace DownloadR.ConsoleApp {
         private void updateProgressAsFailed(FileDownloadStatusReport report) {
             this._bar.Refresh(0, $"{"FAILED",INDENT}{this._downloadFileOptions.File}");
         }
-
-        private void updateProgressAsStarted(FileDownloadStatusReport report) { }
 
         public void Dispose() {
         }
