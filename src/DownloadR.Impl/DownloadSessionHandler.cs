@@ -36,7 +36,7 @@ namespace DownloadR {
             this._logger = logger ?? NullLogger<DownloadSessionHandler>.Instance;
         }
 
-        public Task StartSessionAsync(DownloadSession downloadSession) {
+        public virtual Task StartSessionAsync(DownloadSession downloadSession) {
             try {
                 return Task.Factory.StartNew(() => this.start(downloadSession));
             }

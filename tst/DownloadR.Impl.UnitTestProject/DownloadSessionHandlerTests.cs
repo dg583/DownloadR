@@ -66,7 +66,7 @@ namespace DownloadR.Impl.UnitTestProject {
 
             var options = new DownloadHandlerOptions(workingDir);
 
-            var handler = new DownloadSessionHandlerStub(
+            var handler = new DownloadSessionHandlerMock(
                 options, 
                 downloadTaskBuilder.Object, 
                 new NullLogger<DownloadSessionHandler>());
@@ -92,6 +92,8 @@ namespace DownloadR.Impl.UnitTestProject {
 
             Assert.That(
                 () => status.All(x => x.Value != false));
+
+            Assert.AreEqual(1, handler.StartSessionAsyncCalls);
         }
     }
 }
