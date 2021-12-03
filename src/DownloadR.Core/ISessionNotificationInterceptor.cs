@@ -7,6 +7,10 @@ namespace DownloadR
     /// </summary>
     public interface ISessionNotificationInterceptor
     {
+        void StartSession(IDownloadSessionHandler downloadSessionHandler);
+
+        void SessionCompleted();
+
         void OnFileDownloadStatusReport(FileDownloadStatusReport fileDownloadStatusReport);
     }
 }

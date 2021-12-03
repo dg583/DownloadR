@@ -32,15 +32,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DownloadR.Impl.IntegrationT
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileParser", "FileParser", "{67C32496-4035-47F9-B3A5-4F776F0AF5F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.FileParserCore", "src\DownloadR.FileParserCore\DownloadR.FileParserCore.csproj", "{7FD3A897-17DF-44AF-9E8C-D32C6942A69D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DownloadR.FileParserCore", "src\DownloadR.FileParserCore\DownloadR.FileParserCore.csproj", "{7FD3A897-17DF-44AF-9E8C-D32C6942A69D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.FileParser.Yaml", "src\DownloadR.FileParser.Yaml\DownloadR.FileParser.Yaml.csproj", "{3984E05A-CD7D-4F34-998F-C4468CF4B5E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DownloadR.FileParser.Yaml", "src\DownloadR.FileParser.Yaml\DownloadR.FileParser.Yaml.csproj", "{3984E05A-CD7D-4F34-998F-C4468CF4B5E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{284FC522-2980-409D-A415-67913457DCA5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tst", "tst", "{1D3354DC-A539-4C72-A17F-FBAC4ED58AF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.FileParser.Yaml.UnitTestProject", "tst\DownloadR.FileParser.Yaml.UnitTestProject\DownloadR.FileParser.Yaml.UnitTestProject.csproj", "{A88D3D05-1870-48D9-B634-C09DA761D900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DownloadR.FileParser.Yaml.UnitTestProject", "tst\DownloadR.FileParser.Yaml.UnitTestProject\DownloadR.FileParser.Yaml.UnitTestProject.csproj", "{A88D3D05-1870-48D9-B634-C09DA761D900}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.ConsoleApp", "src\DownloadR.ConsoleApp\DownloadR.ConsoleApp.csproj", "{92B524AE-7DD9-4664-9E1A-42B207214BF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadR.Services.Extensions", "src\DownloadR.Services.Extensions\DownloadR.Services.Extensions.csproj", "{92576C40-27C8-4174-9DB3-7EE0C1AB2819}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +88,14 @@ Global
 		{A88D3D05-1870-48D9-B634-C09DA761D900}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A88D3D05-1870-48D9-B634-C09DA761D900}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A88D3D05-1870-48D9-B634-C09DA761D900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B524AE-7DD9-4664-9E1A-42B207214BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B524AE-7DD9-4664-9E1A-42B207214BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B524AE-7DD9-4664-9E1A-42B207214BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B524AE-7DD9-4664-9E1A-42B207214BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92576C40-27C8-4174-9DB3-7EE0C1AB2819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92576C40-27C8-4174-9DB3-7EE0C1AB2819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92576C40-27C8-4174-9DB3-7EE0C1AB2819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92576C40-27C8-4174-9DB3-7EE0C1AB2819}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +116,8 @@ Global
 		{284FC522-2980-409D-A415-67913457DCA5} = {67C32496-4035-47F9-B3A5-4F776F0AF5F1}
 		{1D3354DC-A539-4C72-A17F-FBAC4ED58AF6} = {67C32496-4035-47F9-B3A5-4F776F0AF5F1}
 		{A88D3D05-1870-48D9-B634-C09DA761D900} = {1D3354DC-A539-4C72-A17F-FBAC4ED58AF6}
+		{92B524AE-7DD9-4664-9E1A-42B207214BF2} = {AEC837FD-A7AA-4A4F-80E8-70AD2780B43F}
+		{92576C40-27C8-4174-9DB3-7EE0C1AB2819} = {AEC837FD-A7AA-4A4F-80E8-70AD2780B43F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D07F178F-38C3-4372-95C8-D57589844236}

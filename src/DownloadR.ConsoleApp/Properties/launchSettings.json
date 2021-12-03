@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DownloadR.ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "download --parallel-downloads 9 -f \"C:\\temp\\GoodFile.yaml\""
+    }
+  }
+}

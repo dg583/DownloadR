@@ -32,8 +32,12 @@ namespace DownloadR {
 
             using(this._logger.BeginScope("DownloadSession")) {
                 var downloadSessionHandler = this.buildDownloadSessionHandler(sessionNotificationInterceptor);
-
+                
+                sessionNotificationInterceptor?.StartSession(downloadSessionHandler);
+                
                 await downloadSessionHandler.StartSessionAsync(session);
+
+                sessionNotificationInterceptor?.SessionCompleted();
             }
         }
 
