@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using DownloadR.Common.Utils;
-
-using Microsoft.Extensions.Logging;
 
 namespace DownloadR.Impl.UnitTestProject.Fakes {
     public class DownloadFileTaskStub : Observable<IFileDownloadProgress>, IDownloadFileTask {
@@ -34,11 +28,6 @@ namespace DownloadR.Impl.UnitTestProject.Fakes {
             this.SendCompletedToObservers();
 
 
-        }
-    }
-
-    public class DownloadSessionHandlerStub : DownloadSessionHandler {
-        public DownloadSessionHandlerStub(DownloadHandlerOptions options, IDownloadTaskBuilder downloadTaskBuilder, ILogger<DownloadSessionHandler> logger) : base(options, downloadTaskBuilder, logger) {
         }
     }
 }
