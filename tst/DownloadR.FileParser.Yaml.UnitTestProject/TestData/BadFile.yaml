@@ -1,0 +1,14 @@
+﻿config: 
+ parallel_downloads: 3
+ download_dir: ./downloads/linux-images
+downloads:
+ - url: https://url.any.dev
+   file: myfile.iso
+   sha256: 24583abcdef
+   overwrite: true
+ - url: https://url.another.dev
+   file: myfile_other.iso
+   Sha256: 08154711
+   overwrite: false
+
+
