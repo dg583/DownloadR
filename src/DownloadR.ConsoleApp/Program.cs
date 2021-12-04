@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -9,10 +7,6 @@ using CommandLine.Text;
 
 using DownloadR.FileParser.Yaml;
 using DownloadR.FileParserCore;
-using DownloadR.Session;
-
-using Konsole;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -105,43 +99,5 @@ namespace DownloadR.ConsoleApp {
             return Task.Factory.StartNew(() => Console.WriteLine("-- Validate"));
         }
 
-    }
-
-    public class ProgressSessionNotificationInterceptor : ISessionNotificationInterceptor, IDisposable {
-        private readonly DownloadSession _downloadSession;
-
-        private readonly List<ProgressHandler> _progressHandlers = new List<ProgressHandler>();
-
-        public ProgressSessionNotificationInterceptor(DownloadSession downloadSession) {
-            downloadSession.ThrowIfNotSet(nameof(downloadSession));
-
-            this._downloadSession = downloadSession;
-            this.initProgressHandlers();
-        }
-
-        private void initProgressHandlers() {
-            foreach(DownloadFileOptions downloadFileOptions in this._downloadSession.Configuration) {
-                ProgressHandler progressHandler = new ProgressHandler(
-                    downloadFileOptions,
-                    new ProgressBar(100)
-                );
-
-                this._progressHandlers.Add(progressHandler);
-            }
-        }
-
-        public void SessionCompleted() {
-
-        }
-
-        public void OnFileDownloadStatusReport(FileDownloadStatusReport fileDownloadStatusReport) {
-            foreach(ProgressHandler handler in this._progressHandlers.Where(x => x.IsResponsible(fileDownloadStatusReport))) {
-                handler.TryUpdateStatus(fileDownloadStatusReport);
-            }
-        }
-
-        public void Dispose() {
-            this._progressHandlers?.ForEach(x => x.Dispose());
-        }
     }
 }
