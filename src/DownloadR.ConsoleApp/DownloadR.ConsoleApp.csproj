@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net5.0</TargetFramework>
+		<AssemblyName>digoso.dlm</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommandLineParser" Version="2.8.0" />
+		<PackageReference Include="Goblinfactory.ProgressBar" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DownloadR.FileParser.Yaml\DownloadR.FileParser.Yaml.csproj" />
+	  <ProjectReference Include="..\DownloadR.FileParserCore\DownloadR.FileParserCore.csproj" />
+	  <ProjectReference Include="..\DownloadR.Impl\DownloadR.Impl.csproj" />
+	  <ProjectReference Include="..\DownloadR.Services.Extensions\DownloadR.Services.Extensions.csproj" />
+	</ItemGroup>
+
+</Project>
