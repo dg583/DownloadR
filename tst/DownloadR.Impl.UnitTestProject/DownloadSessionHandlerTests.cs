@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using DownloadR.Factories;
 using DownloadR.Impl.UnitTestProject.Fakes;
 using DownloadR.Session;
 
@@ -19,8 +19,8 @@ namespace DownloadR.Impl.UnitTestProject {
         [Test]
         public void CreateInstance() {
 
-            Mock<IDownloadTaskBuilder> downloadTaskBuilder = new Mock<IDownloadTaskBuilder>();
-            downloadTaskBuilder.Setup(x => x.Build(It.IsAny<DownloadFileConfig>()))
+            Mock<IDownloadTaskFactory> downloadTaskBuilder = new Mock<IDownloadTaskFactory>();
+            downloadTaskBuilder.Setup(x => x.CreateDownloadFileTask(It.IsAny<DownloadFileConfig>()))
                 .Returns(() => new DownloadFileTaskStub());
 
 
@@ -41,8 +41,8 @@ namespace DownloadR.Impl.UnitTestProject {
         [Test]
         public async Task Verify_Tasks_Are_executed_parallel() {
 
-            Mock<IDownloadTaskBuilder> downloadTaskBuilder = new Mock<IDownloadTaskBuilder>();
-            downloadTaskBuilder.Setup(x => x.Build(It.IsAny<DownloadFileConfig>()))
+            Mock<IDownloadTaskFactory> downloadTaskBuilder = new Mock<IDownloadTaskFactory>();
+            downloadTaskBuilder.Setup(x => x.CreateDownloadFileTask(It.IsAny<DownloadFileConfig>()))
                 .Returns(() => new DownloadFileTaskStub());
 
 

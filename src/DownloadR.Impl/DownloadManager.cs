@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
-
+using DownloadR.Factories;
 using DownloadR.Session;
 
 using Microsoft.Extensions.Logging;
@@ -9,12 +9,12 @@ using Microsoft.Extensions.Logging;
 namespace DownloadR {
     public class DownloadManager : IDownloadManager {
         private readonly DownloadManagerOptions _options;
-        private readonly ISessionHandlerBuilder _sessionHandlerBuilder;
+        private readonly ISessionHandlerFactory _sessionHandlerBuilder;
         private readonly ILogger<DownloadManager> _logger;
 
         public DownloadManager(
             DownloadManagerOptions options,
-            ISessionHandlerBuilder sessionHandlerBuilder,
+            ISessionHandlerFactory sessionHandlerBuilder,
             ILogger<DownloadManager> logger) {
             this._options = options ?? throw new ArgumentNullException(nameof(options));
             this._sessionHandlerBuilder = sessionHandlerBuilder ?? throw new ArgumentNullException(nameof(sessionHandlerBuilder));
@@ -62,7 +62,7 @@ namespace DownloadR {
             try {
                 DownloadHandlerOptions options = new(this._options.WorkingDirectory);
 
-                IDownloadSessionHandler handler = this._sessionHandlerBuilder.BuildDownloadSessionHandler(options);
+                IDownloadSessionHandler handler = this._sessionHandlerBuilder.CreateDownloadSessionHandler(options);
 
                 return handler;
             }

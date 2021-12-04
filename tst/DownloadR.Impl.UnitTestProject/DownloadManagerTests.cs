@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
-
+﻿using System;
+using System.Threading.Tasks;
+using DownloadR.Factories;
 using DownloadR.Impl.UnitTestProject.Fakes;
 using DownloadR.Session;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -19,17 +21,28 @@ namespace DownloadR.Impl.UnitTestProject {
 
             Mock<IDownloadFileTask> downloadFileTask = new Mock<IDownloadFileTask>();
 
-            Mock<IDownloadTaskBuilder> downloadTaskBuilder = new Mock<IDownloadTaskBuilder>();
-            downloadTaskBuilder
-                .Setup(x => x.Build(It.IsAny<DownloadFileConfig>()))
+            Mock<IDownloadTaskFactory> downloadTaskFactory = new Mock<IDownloadTaskFactory>();
+            downloadTaskFactory
+                .Setup(x => x.CreateDownloadFileTask(It.IsAny<DownloadFileConfig>()))
                 .Returns(downloadFileTask.Object);
 
-            DefaultSessionHandlerBuilder builder = new DefaultSessionHandlerBuilder(downloadTaskBuilder.Object, loggerFactory);
+            Mock<IServiceProvider> serviceProvider = new Mock<IServiceProvider>();
+
+            serviceProvider
+                .Setup(x => x.GetService(typeof(IDownloadTaskFactory)))
+                .Returns(downloadTaskFactory.Object);
+
+            serviceProvider
+                .Setup(x => x.GetService(typeof(ILogger<DownloadSessionHandler>)))
+                .Returns(NullLoggerFactory.Instance.CreateLogger<DownloadSessionHandler>());
+
+
+            DefaultSessionHandlerFactory builder = new DefaultSessionHandlerFactory(serviceProvider.Object);
 
             string workingDir = TestContext.CurrentContext.WorkDirectory;
 
             DownloadHandlerOptions downloadHandlerOptions = new DownloadHandlerOptions(workingDir);
-            IDownloadSessionHandler downloadSessionHandler = builder.BuildDownloadSessionHandler(downloadHandlerOptions);
+            IDownloadSessionHandler downloadSessionHandler = builder.CreateDownloadSessionHandler(downloadHandlerOptions);
 
             Assert.IsNotNull(downloadSessionHandler);
         }
@@ -38,12 +51,12 @@ namespace DownloadR.Impl.UnitTestProject {
     public class DownloadManagerTests {
         [Test]
         public void Verify_Can_Instantiate() {
-            Mock<IDownloadTaskBuilder> downloadTaskBuilder = new Mock<IDownloadTaskBuilder>();
-            downloadTaskBuilder.Setup(x => x.Build(It.IsAny<DownloadFileConfig>()))
+            Mock<IDownloadTaskFactory> downloadTaskBuilder = new Mock<IDownloadTaskFactory>();
+            downloadTaskBuilder.Setup(x => x.CreateDownloadFileTask(It.IsAny<DownloadFileConfig>()))
                 .Returns(() => new DownloadFileTaskStub());
 
 
-            Mock<ISessionHandlerBuilder> sessionHandlerBuilder = new Mock<ISessionHandlerBuilder>();
+            Mock<ISessionHandlerFactory> sessionHandlerBuilder = new Mock<ISessionHandlerFactory>();
 
             string workingDir = TestContext.CurrentContext.WorkDirectory;
 
@@ -57,8 +70,8 @@ namespace DownloadR.Impl.UnitTestProject {
 
         [Test]
         public void Verify_Works() {
-            Mock<IDownloadTaskBuilder> downloadTaskBuilder = new Mock<IDownloadTaskBuilder>();
-            downloadTaskBuilder.Setup(x => x.Build(It.IsAny<DownloadFileConfig>()))
+            Mock<IDownloadTaskFactory> downloadTaskBuilder = new Mock<IDownloadTaskFactory>();
+            downloadTaskBuilder.Setup(x => x.CreateDownloadFileTask(It.IsAny<DownloadFileConfig>()))
                 .Returns(() => new DownloadFileTaskStub());
 
             string workingDir = TestContext.CurrentContext.WorkDirectory;
@@ -67,9 +80,9 @@ namespace DownloadR.Impl.UnitTestProject {
             DownloadSessionHandlerMock downloadSessionHandler = new DownloadSessionHandlerMock(options,
                 downloadTaskBuilder.Object, new NullLogger<DownloadSessionHandler>());
 
-            Mock<ISessionHandlerBuilder> sessionHandlerBuilder = new Mock<ISessionHandlerBuilder>();
+            Mock<ISessionHandlerFactory> sessionHandlerBuilder = new Mock<ISessionHandlerFactory>();
             sessionHandlerBuilder
-                .Setup(x => x.BuildDownloadSessionHandler(It.IsAny<DownloadHandlerOptions>()))
+                .Setup(x => x.CreateDownloadSessionHandler(It.IsAny<DownloadHandlerOptions>()))
                 .Returns(downloadSessionHandler);
 
 
@@ -99,7 +112,7 @@ namespace DownloadR.Impl.UnitTestProject {
             task.Wait();
 
             sessionHandlerBuilder.Verify(
-                x => x.BuildDownloadSessionHandler(It.IsAny<DownloadHandlerOptions>()),
+                x => x.CreateDownloadSessionHandler(It.IsAny<DownloadHandlerOptions>()),
                 Times.Once
             );
 
