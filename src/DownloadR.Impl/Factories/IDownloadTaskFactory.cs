@@ -1,4 +1,4 @@
-﻿namespace DownloadR {
+﻿namespace DownloadR.Factories {
 
     /// <summary>
     /// Defines a builder for <see cref="IDownloadFileTask"/>
@@ -6,13 +6,13 @@
     /// <remarks>
     ///Seam for testing
     /// </remarks>
-    public interface IDownloadTaskBuilder {
+    public interface IDownloadTaskFactory {
 
         /// <summary>
-        /// Builds a <see cref="IDownloadFileTask"/> for the <param name="downloadFileConfig"></param>
+        /// Creates an <see cref="IDownloadFileTask"/> for the <param name="downloadFileConfig"></param>
         /// </summary>
         /// <param name="downloadFileConfig"><see cref="DownloadFileConfig"/></param>
         /// <returns></returns>
-        IDownloadFileTask Build(DownloadFileConfig downloadFileConfig);
+        IDownloadFileTask CreateDownloadFileTask(DownloadFileConfig downloadFileConfig);
     }
 }

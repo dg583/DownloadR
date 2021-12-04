@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using DownloadR.EventArguments;
+using DownloadR.Factories;
 using DownloadR.Observers;
 using DownloadR.Session;
 
@@ -27,10 +28,10 @@ namespace DownloadR {
         #endregion
 
         private readonly DownloadHandlerOptions _options;
-        private readonly IDownloadTaskBuilder _downloadTaskBuilder;
+        private readonly IDownloadTaskFactory _downloadTaskBuilder;
         private readonly ILogger<DownloadSessionHandler> _logger;
 
-        public DownloadSessionHandler(DownloadHandlerOptions options, IDownloadTaskBuilder downloadTaskBuilder, ILogger<DownloadSessionHandler> logger) {
+        public DownloadSessionHandler(DownloadHandlerOptions options, IDownloadTaskFactory downloadTaskBuilder, ILogger<DownloadSessionHandler> logger) {
             this._options = options ?? throw new ArgumentNullException(nameof(options));
             this._downloadTaskBuilder = downloadTaskBuilder ?? throw new ArgumentNullException(nameof(downloadTaskBuilder));
             this._logger = logger ?? NullLogger<DownloadSessionHandler>.Instance;
@@ -47,6 +48,9 @@ namespace DownloadR {
         }
 
         private void start(DownloadSession downloadSession) {
+            using var loggerScope = this._logger.BeginScope();
+
+
             //TODO: Throws exception if file already exists - pass ex to callee
             var contexts = this.createFileDownloadContextsFromDownloadSession(downloadSession);
 
@@ -62,6 +66,8 @@ namespace DownloadR {
         }
 
         private void executeDownloadFileTask(FileDownloadContext fileDownloadContext) {
+            using var loggerScope = this._logger.BeginScope();
+
             SemaphoreSlim semaphoreSlim = new SemaphoreSlim(0, 1);
 
             var observer = new DownloadFileObserver(fileDownloadContext);
@@ -71,7 +77,7 @@ namespace DownloadR {
             observer.OnDownloadProgress += handleOnDownloadProgress;
 
             using(fileDownloadContext.DownloadFileTask.Subscribe(observer)) {
-                
+
                 //Semaphore to enable usage of parallel.foreach - must wait until download is complete
                 using(fileDownloadContext.DownloadFileTask.Subscribe(
                     new ReleaseSemaphoreObserver(semaphoreSlim))) {

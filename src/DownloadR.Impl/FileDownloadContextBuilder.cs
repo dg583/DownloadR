@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
+using DownloadR.Factories;
 using DownloadR.Session;
 
 namespace DownloadR {
     internal class FileDownloadContextBuilder {
         private readonly DownloadHandlerOptions _options;
-        private readonly IDownloadTaskBuilder _downloadTaskBuilder;
+        private readonly IDownloadTaskFactory _downloadTaskBuilder;
 
-        public FileDownloadContextBuilder(DownloadHandlerOptions options, IDownloadTaskBuilder downloadTaskBuilder) {
+        public FileDownloadContextBuilder(DownloadHandlerOptions options, IDownloadTaskFactory downloadTaskBuilder) {
             this._options = options;
             this._downloadTaskBuilder = downloadTaskBuilder;
         }
@@ -52,7 +53,7 @@ namespace DownloadR {
         }
         protected virtual IDownloadFileTask buildDownloadFileTask(DownloadFileConfig downloadFileConfig) {
             //Possible seam for testing; instead of using the factory
-            return this._downloadTaskBuilder.Build(downloadFileConfig);
+            return this._downloadTaskBuilder.CreateDownloadFileTask(downloadFileConfig);
         }
 
         protected virtual string getDownloadPath(DownloadSession downloadSession) {

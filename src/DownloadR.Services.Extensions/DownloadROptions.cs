@@ -1,4 +1,5 @@
 ﻿using System;
+using DownloadR.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DownloadR {
@@ -19,17 +20,17 @@ namespace DownloadR {
             this.IDownloadManagerServiceDescriptor = serviceDescriptor;
         }
 
-        public void UseTaskBuilder(Func<IServiceProvider, IDownloadTaskBuilder> factoryMethod,
+        public void UseTaskBuilder(Func<IServiceProvider, IDownloadTaskFactory> factoryMethod,
             ServiceLifetime serviceLifetime = ServiceLifetime.Transient) {
             ServiceDescriptor serviceDescriptor = new ServiceDescriptor(
-                typeof(IDownloadTaskBuilder), factoryMethod, serviceLifetime);
+                typeof(IDownloadTaskFactory), factoryMethod, serviceLifetime);
 
             this.IDownloadTaskBuilderServiceDescriptor = serviceDescriptor;
         }
 
         public DownloadROptions() {
-            this.IDownloadTaskBuilderServiceDescriptor = ServiceDescriptor.Scoped<IDownloadTaskBuilder, DefaultDownloadTaskBuilder>();
-            this.ISessionHandlerBuilderServiceDescriptor = ServiceDescriptor.Scoped<ISessionHandlerBuilder, DefaultSessionHandlerBuilder>();
+            this.IDownloadTaskBuilderServiceDescriptor = ServiceDescriptor.Scoped<IDownloadTaskFactory, DefaultDownloadTaskFactory>();
+            this.ISessionHandlerBuilderServiceDescriptor = ServiceDescriptor.Scoped<ISessionHandlerFactory, DefaultSessionHandlerFactory>();
         }
     }
 }
